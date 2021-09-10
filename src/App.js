@@ -30,6 +30,40 @@ function App() {
      // rejectUnauthorized: false
     });
   
+    
+    console.log(etherpad)
+    etherpad.createAuthorIfNotExistsFor(8, ["javon-test2"], function (error, data1) {
+      if (error) console.log("Error creating author: " + error.message);
+      else console.log("New author created: " + data1.authorID);
+      setAuthorID(data1.authorID);
+      console.log(data1)
+      alert("Author id" + data1.authorID);
+    })
+
+  //  Portal maps the internal userid to an etherpad group:
+  /*  Request: http://pad.domain/api/1/createAuthorIfNotExistsFor?apikey=secret&name=Michael&authorMapper=7
+    
+    Response: {code: 0, message:"ok", data: {authorID: "a.s8oes9dhwrvt0zif"}}
+  
+    
+    Request: http://pad.domain/api/1/createGroupIfNotExistsFor?apikey=secret&groupMapper=7
+    
+    Response: {code: 0, message:"ok", data: {groupID: "g.s8oes9dhwrvt0zif"}}
+    
+    Portal creates a pad in the userGroup
+    
+    Request: http://pad.domain/api/1/createGroupPad?apikey=secret&groupID=g.s8oes9dhwrvt0zif&padName=samplePad&text=This is the first sentence in the pad
+    
+    Response: {code: 0, message:"ok", data: null}
+    
+    Portal starts the session for the user on the group:
+    
+    Request: http://pad.domain/api/1/createSession?apikey=secret&groupID=g.s8oes9dhwrvt0zif&authorID=a.s8oes9dhwrvt0zif&validUntil=1312201246
+    
+    Response: {"data":{"sessionID": "s.s8oes9dhwrvt0zif"}}
+    
+    Portal places the cookie "sessionID" with the given value on the client and creates an iframe including the pad.
+*/
   //   etherpad.createPad('howdy', ["yes"])
 /*     , function(error, data){
        if (error) console.log("Error creating text: " + error.message);
@@ -38,17 +72,17 @@ function App() {
      })*/
  
   //  etherpad.setText('howdy', 'hello')
-  setSessionID('howdy')
+  //setSessionID('howdy')
 
   //   console.log(etherpad.getText('howdy', [1]))
   // etherpad.getHTML('howdy').then((e) => {
   //   console.log(e)
   // })
 
-   etherpad.getHTML('howdy').then((e, d) => {
+/*   etherpad.getHTML('howdy').then((e, d) => {
     console.log(e)
     console.log(d)
-  })
+  })*/
   
 /*     
      , function(error, data){
@@ -144,7 +178,7 @@ alert(data3.sessionID)
         {padID && (
           <iframe
             src={
-              "http://localhost:9001/p/" +
+              "http://localhost:9001/p/" + "hello" +
               
               "?showChat=false&showLineNumbers=false"
             }
