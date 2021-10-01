@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+
+export const ListAllPads = async () => {
+    return axios.post('http://localhost:8080/listAllPads')
+}
+
 async function createPad() {
     console.log("CreatePad Front End")
     

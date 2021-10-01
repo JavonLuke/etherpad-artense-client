@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import Link from 'react-dom';
 import { useState } from 'react';
+import UserPads from "../UserPads/UserPads"
 
 import etherpad from '../../etherpad/Pad'
 //import Pad from '../../../backend/Pad'
@@ -25,7 +26,7 @@ async function createPad() {
 
 
 export default function Dashboard(props) {
-  history = useHistory()
+ //const history = useHistory()
 const [etherpadOptions, setEtherpadOptions] = useState(props.etherpadOptions);
 const [padID, setPadID] = useState(undefined)
  
@@ -45,13 +46,7 @@ console.log("Set Pad ID" + padID)
       }, [padID])*/
 
 
-
-
-  return(
-    <div>
-    <h2>Dashboard</h2>
-   
-    <button onClick={async () => {
+/**<button onClick={async () => {
       let a = await createPad()
       setPadID(a.padID)}}>Create Pad</button>
 
@@ -60,7 +55,13 @@ console.log("Set Pad ID" + padID)
       pathName: "/pad",
       state: {
         padID : padID
-      }}}>Get Pad</Link> 
+      }}}>Get Pad</Link>  */
+
+  return(
+    <div>
+    <h2>Dashboard</h2>
+   <UserPads></UserPads>
+    
 
     </div>
 

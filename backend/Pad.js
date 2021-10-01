@@ -1,36 +1,31 @@
+const etherpad = require('./Etherpad')
 
-
-
-
- export const CreatePad = async (tempPadID = undefined, etherpadOptions = undefined) => {
-    
-let apiKey = "308c704c36b41c846ba1713a59f92c6a9707ced910894de32070287a03bfcb68"
-let apiVersion = "1.2.14"
-let site = "localhost"
-let connectionType = "http"
-let port = ":9001" // don't forget colon
-let createAuthor_endpoint = 'createAuthor'
-// let createSession_endpoint = 'createSession'
-// let createGroup_endpoint = 'createGroup'
-// let validUntil_endpoint = 2312905480;
-// let createGroupPadID_endpoint = 'createGroupPad'
-let createPadID_endpoint = 'createPad'
-let defaultText = "";
-let testPadName = "testCreatePad"
-let testText = "this is the first sentence - testing"
-let clientLocation = "http://localhost:9001/p/"
-
-
-function guidGenerator() {
-    var S4 = function() {
-       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    };
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+const ListAllPads = async () => {
+    return etherpad("listAllPads").then((data) => {
+     console.log(data)
+     return data?.padIDs   
+    }).catch((err) => {
+        console.log(err)
+    })
 }
 
+
+const HTMLPad = () => {
+
+}
+ const   DeletePad = () => {
+
+ }
+    const ListAuthorOfPad = () => {
+
+    }
+
+    
+
+  const CreatePad = async (tempPadID = undefined, etherpadOptions = undefined) => {
+  
     const padID = tempPadID ? tempPadID : guidGenerator()
 
-    const endPoint = (point) => `${connectionType}://${site}${port}/api/${apiVersion}/${point}?apikey=${apiKey}`;
     let padEndPoint_endpoint = `${endPoint(createPadID_endpoint)}` + `&padID=testCreatePad` + `&text=${testText}`
     
     let groupPadID = await axios.get(padEndPoint_endpoint).then((res) => {
@@ -133,3 +128,12 @@ function guidGenerator() {
 
 
 }*/
+
+module.exports = {
+    CreatePad,
+   // GetPad,
+    HTMLPad,
+    DeletePad,
+    ListAuthorOfPad,
+    ListAllPads
+}

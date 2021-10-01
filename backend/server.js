@@ -15,6 +15,14 @@ app.use('/login', (req, res) => {
     });
 });
 
+app.use('/listAllPads', async (req, res) => {
+  res.send({
+    data: createPad.ListAllPads()
+  });
+  
+})
+
+
 app.use('/createPad', async (req, res) => {
   // req.authorID not null
   // req.authorID is an author - api.getAuthorName
