@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import Link from 'react-dom';
 import { useState } from 'react';
 import UserPads from "../UserPads/UserPads"
-
+import * as pad from "../../etherpad/Pad"
 import etherpad from '../../etherpad/Pad'
 //import Pad from '../../../backend/Pad'
 import Pad from '../../etherpad/Pad'
 import { useHistory } from 'react-router';
 
-async function createPad() {
+/*async function createPad() {
   console.log("CreatePad Front End")
   
   return fetch('http://localhost:8080/createPad', {
@@ -21,7 +21,7 @@ async function createPad() {
       console.log(data)
       return data.json()})
     
-}
+}*/
 
 
 
@@ -30,6 +30,11 @@ export default function Dashboard(props) {
 const [etherpadOptions, setEtherpadOptions] = useState(props.etherpadOptions);
 const [padID, setPadID] = useState(undefined)
  
+useEffect(() => {
+
+
+}, [padID])
+
 console.log("Set Pad ID" + padID)
 //<UserPads authorID = "testAuthor"> </UserPads>
 
@@ -60,6 +65,10 @@ console.log("Set Pad ID" + padID)
   return(
     <div>
     <h2>Dashboard</h2>
+    <button onClick={async () => {
+      let a = await pad.createPad()
+      setPadID(a.padID)}}>Create Pad</button>
+
    <UserPads></UserPads>
     
 

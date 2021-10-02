@@ -7,6 +7,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Dashboard from "./components/Dashboard/Dashboard";
 import useToken from "./components/token/useToken";
 import {Pad} from './etherpad/Pad'
+import {ViewPad} from "./components/UserPads/ViewPad"
+import UserPads from "./components/UserPads/UserPads"
 //const eejs = require('ep_etherpad-lite/node/eejs/');
 //const settings = require('ep_etherpad-lite/node/utils/Settings');
 
@@ -37,16 +39,25 @@ function App() {
   return (
     <div className="wrapper">
       <h1>Application</h1>
-      < Dashboard />
+     
       <BrowserRouter>
         <Switch>
           <Route path="/dashboard">
             <Dashboard />
           </Route>
-          <Route path="/pad">
-            <Pad />
+          <Route path="/viewPad">
+            <div> HELLO </div>
+            <ViewPad />
+          </Route>
+          <Route path="/userPads">
+            <UserPads />
           </Route>
           
+          <Route path="/">
+            <Dashboard></Dashboard>
+          </Route>
+          
+
         </Switch>
       </BrowserRouter>
     </div>

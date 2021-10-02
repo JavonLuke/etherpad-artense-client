@@ -13,33 +13,27 @@ let createAuthor_endpoint = 'createAuthor'
 let createPadID_endpoint = 'createPad'
 let defaultText = "";
 let testPadName = "testCreatePad"
-let testText = "this is the first sentence - testing"
+
 let clientLocation = "http://localhost:9001/p/"
 
-function guidGenerator() {
-    var S4 = function() {
-       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    };
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
-}
+
 
 const endPoint = (point) => `${connectionType}://${site}${port}/api/${apiVersion}/${point}?apikey=${apiKey}`;
     
 const etherpad = (point, etherpadOptions = []) => {
     let options = "";
     if(etherpadOptions.length > 0) {
-        options = etherpadOptions.flat().join()
+        options = etherpadOptions.flat().join("")
     }
 
     let connectionPoint = endPoint(point).concat(options)
 
    return axios.get(connectionPoint).then((res) => {
-       console.log("Point: " + point)
-        console.log(res)
+       console.log("Etherpad - Connection - Success ~ " + point)
         return res?.data
 
     }).catch((err) => {
-        console.err(err)
+        console.log("Etherpad - Connection - Error")
     })
 
 }

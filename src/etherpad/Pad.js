@@ -1,24 +1,41 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+let localhost = 'http://localhost:8080/'
 
 export const ListAllPads = async () => {
-    return axios.post('http://localhost:8080/listAllPads')
+    return axios.post(localhost + 'listAllPads').catch((err) => {
+        console.error(err)
+    })
+}
+export const setText = async () => {
+    return axios.post(localhost + 'setText').catch((err) => {
+        console.error(err)
+    })
 }
 
-async function createPad() {
+
+export const createPad = async (padID = undefined, text = undefined) => {
     console.log("CreatePad Front End")
     
     return fetch('http://localhost:8080/createPad', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
-        }//,      body: JSON.stringify(credentials)
-    })
-    .then((data) => {
-        console.log(data)
-        return data.json()})
-      
+        },        
+        body: JSON.stringify({padID: padID, text: text})
+    }).then(async (data) => {
+        console.log("Pad - createPad - Success")
+       
+        let result = await data.json()
+        //const token = await data.json()
+        //console.log(token)
+
+        return result.data
+    }).catch((err) => {
+            console.log("Pad - createPad - Error")
+            console.error(err)
+        })
   }
 
 

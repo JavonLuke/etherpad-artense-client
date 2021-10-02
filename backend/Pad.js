@@ -1,14 +1,15 @@
 const etherpad = require('./Etherpad')
 
-const ListAllPads = async () => {
-    return etherpad("listAllPads").then((data) => {
-     console.log(data)
-     return data?.padIDs   
-    }).catch((err) => {
-        console.log(err)
-    })
+const ListAllPads = () => {
+    return etherpad("listAllPads")
 }
 
+function guidGenerator() {
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4()).toString();
+}
 
 const HTMLPad = () => {
 
@@ -20,18 +21,62 @@ const HTMLPad = () => {
 
     }
 
-    
+    const CreatePad = (options) => {
+        console.log("Pad - CreatePad")        
+        let padID = options?.padID ? 
+        `&padID=${options?.padID}` :
+        `&padID=${guidGenerator()}`
+        console.log(padID)
 
-  const CreatePad = async (tempPadID = undefined, etherpadOptions = undefined) => {
+        let text = options?.text ? `&text=${options?.text}` : ""
+        console.log(text)
+
+
+        const etherpadOptions = [padID, text]
+
+        return etherpad('createPad', etherpadOptions)
+    }
+
+    const CreatePad1 = (tempPadID = undefined, etherpadOptions = undefined) => {
+  
+        
+        const padID = tempPadID ? tempPadID : guidGenerator()
+        console.log(padID)
+        let padEndPoint_endpoint = `${endPoint('createPad')}` + `&padID=${padID}` + `&text=${testText}`
+        
+        console.log(endPoint('createPad'))
+        console.log(padEndPoint_endpoint)
+
+        return axios.get(padEndPoint_endpoint).then((res) => {
+                    console.log(res)
+                    console.log("Pad Created: " + res.data.data.padID)
+                    let groupPadID = res.data.data.padID
+                    
+                    // return res.data.data.padID
+                    let padLocation = `${clientLocation}${groupPadID}`// + translateEtherpadOptions(etherpadOptions)
+            
+                    return {       
+                "groupPadID": groupPadID,
+                "clientLocation": clientLocation,
+                "padLocation": padLocation}
+
+                }).catch((err) => {
+                    console.error(err)
+                })
+            
+         
+    }
+
+  /*const CreatePad = async (tempPadID = undefined, etherpadOptions = undefined) => {
   
     const padID = tempPadID ? tempPadID : guidGenerator()
 
-    let padEndPoint_endpoint = `${endPoint(createPadID_endpoint)}` + `&padID=testCreatePad` + `&text=${testText}`
+    let padEndPoint_endpoint = `${endPoint('createPad')}` + `&padID=${padID}` + `&text=${testText}`
     
     let groupPadID = await axios.get(padEndPoint_endpoint).then((res) => {
             console.log(res)
             if(res.data.data === null) {
-                return "testCreatePad"
+                return padID
             }
             console.log("Pad Created: " + res.data.data.padID)
             return res.data.data.padID
@@ -43,7 +88,7 @@ const HTMLPad = () => {
     "groupPadID": groupPadID,
     "clientLocation": clientLocation,
     "padLocation": padLocation}
-    }
+    }*/
 /*
  const CreatePad1 = (tempPadID = undefined, etherpadOptions) => {
     //const [etherpadOptions, setEtherpadOptions] = useState(props.etherpadOptions);
